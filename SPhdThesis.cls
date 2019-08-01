@@ -1,7 +1,8 @@
 
 % SPhdThesis v1.0
 % By Saurabh Garg (saurabhgarg@mysoc.net)
-% Version 1.0 released 11.06.2013
+% Edited by Eric Lehmann (coding@kernschall.de)
+% Version 1.1 released 01.08.2019
 
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesClass{SPhdThesis}[2013/06/11 v1.0 SPhdThesis class]
@@ -24,11 +25,11 @@
 % Define line spacing. The valid values are [onehalf] and double.
 % Note that before using \SgLineSpacing setspace package must be loaded.
 \define@choicekey*[Sg]{PhDThesis}{linespacing}[\val\nr]{onehalf,double}[onehalf]{%
-	\ifcase\nr\relax
-		\def \SgIntLineSpacing{\onehalfspacing}
-	\or
-		\def \SgIntLineSpacing{\doublespacing}
-	\fi
+  \ifcase\nr\relax
+    \def \SgIntLineSpacing{\onehalfspacing}
+  \or
+    \def \SgIntLineSpacing{\doublespacing}
+  \fi
 }
 \setkeys[Sg]{PhDThesis}{linespacing}
 
@@ -47,11 +48,11 @@
 % Right makes chapters and entries in frontmatter begin  only on right hand pages 
 % or on the next page available. Any puts them on the next available page.
 \define@choicekey*[Sg]{PhDThesis}{open}[\val\nr]{right,any}[any]{%
-	\ifcase\nr\relax
-		\def \SgIntOpen {openright}
-	\or
-		\def \SgIntOpen {openany}
-	\fi
+  \ifcase\nr\relax
+    \def \SgIntOpen {openright}
+  \or
+    \def \SgIntOpen {openany}
+  \fi
 }
 \setkeys[Sg]{PhDThesis}{open}
 
@@ -103,6 +104,7 @@
 
 % Change the font of the caption to sans serif and make label bold.
 \RequirePackage[labelfont=bf]{caption}
+% \RequirePackage{subcaption}                           % For subcaptions in minipages / can not be used with subfig!
 
 
 
@@ -114,8 +116,41 @@
 \RequirePackage{graphicx, subfig}                     % Figures.
 \RequirePackage{amsmath, amssymb, amsthm}             % Math symbols and fonts.
 \RequirePackage{float}                                % Must be done before hyperref.
+\RequirePackage{csvsimple}                            % For csv import (from ods)                                
 \RequirePackage[usenames,dvipsnames,hyperref]{xcolor} % For defining colors.
 \RequirePackage{ifthen}                               % For comparison.
+\RequirePackage[cache=false, outputdir=.texpadtmp]{minted}                  % For source code linting
+\RequirePackage{fancyvrb}
+\RequirePackage{wrapfig}                              % For text wrapping around figures
+\RequirePackage[round,authoryear]{natbib}             % For more elegant citations
+\RequirePackage{enumitem}                             % For alphabetical enums
+\RequirePackage{pdflscape}                            % For landscape pages
+\RequirePackage[refpage]{nomencl}                   % For list of abbreviations
+\makenomenclature
+
+\RequirePackage{pgf}                              % For rendering matplotlib plots in latex
+
+% -----------------------------------------------------------------------
+% S O U R C E  C O D E  E X A M P L E S
+
+\definecolor{lightgray}{rgb}{0.96, 0.96, 0.96}
+\RequirePackage{mdframed}                             % For colored minting boxes
+\surroundwithmdframed[
+  hidealllines=true,
+  backgroundcolor=lightgray,
+  skipbelow=\baselineskip,
+  skipabove=\baselineskip
+]{minted}
+
+\surroundwithmdframed[
+  hidealllines=true,
+  backgroundcolor=lightgray,
+  skipbelow=\baselineskip,
+  skipabove=\baselineskip
+]{verbatim}
+
+\ifthenelse{\equal{\SgIntMedia}{screen}}{\usemintedstyle{emacs}}{}
+\ifthenelse{\equal{\SgIntMedia}{print}}{\usemintedstyle{bw}}{}
 
 
 
@@ -124,19 +159,19 @@
 
 % Use geometry package to set up margins.
 % A4 paper is 8.27 x 11.69 inch.
-\RequirePackage[a4paper, left=1.25in, right=1in, top=1in, bottom=1in, includehead, \SgIntPageSide]{geometry}
+\RequirePackage[a4paper, left=1.181102in, right=1.181102in, top=1.181102in, bottom=0.984252in, includehead, \SgIntPageSide]{geometry}
 
 \ifthenelse{\equal{\SgIntOpen}{openright}}
-{
-	% For adding extra blank page, if necessary, after chapter.
-	\RequirePackage{emptypage}
-	
-	% Define a command to leave a blank page. This is used in frontmatter to add 
-	% an empty page between ack, abstract, toc, lof and lot.
-	\newcommand{\SgIntClearDoublePage}{\clearpage{\pagestyle{empty}\cleardoublepage}}
+{%
+  % For adding extra blank page, if necessary, after chapter.
+  \RequirePackage{emptypage}
+  
+  % Define a command to leave a blank page. This is used in frontmatter to add 
+  % an empty page between ack, abstract, toc, lof and lot.
+  \newcommand{\SgIntClearDoublePage}{\clearpage{\pagestyle{empty}\cleardoublepage}}
 }
-{
-	\newcommand{\SgIntClearDoublePage}{\clearpage}
+{%
+  \newcommand{\SgIntClearDoublePage}{\clearpage}
 }
 
 % For disabling paragraph indenting and using a blank line between paragraphs.
@@ -146,9 +181,30 @@
 \RequirePackage{setspace}
 \SgIntLineSpacing
 
+\RequirePackage[flushmargin]{footmisc}
+
+
+% adjust footnotesize
+%\newcommand\footnotesize{%
+%   \@setfontsize\footnotesize\@ixpt{10}%
+%   \abovedisplayskip 8\p@ \@plus2\p@ \@minus4\p@
+%   \abovedisplayshortskip \z@ \@plus\p@
+%   \belowdisplayshortskip 4\p@ \@plus2\p@ \@minus2\p@
+%   \def\@listi{\leftmargin\leftmargini
+%               \topsep 4\p@ \@plus2\p@ \@minus2\p@
+%               \parsep 2\p@ \@plus\p@ \@minus\p@
+%               \itemsep \parsep}%
+%   \belowdisplayskip \abovedisplayskip
+%}
+
 % Fix footnote spacing
-\setlength{\footnotesep}{0.5cm}   % Distance between two footnotes.
+\setlength{\footnotesep}{0.3cm}   % Distance between two footnotes.
 \setlength{\skip\footins}{0.5cm}  % Distance between last line of text and first footnote.
+
+\addtolength{\footnotesep}{2mm} % change to 1mm 
+
+% add space between number and text
+% \setlength{\footnotemargin}{2mm}
 
 % By default Latex centers images vertically on a float page.
 % Modify Latex internal variables so that figures are placed from top.
@@ -205,12 +261,12 @@
 
 \newenvironment{SgAlgorithm}[1][t]
 {%
-	\begin{algorithm2e}[#1]
+  \begin{algorithm2e}[#1]
     \linespread{1.3} % Set the line spacing to one and half.
     \selectfont      % The linespread is effective only after selectfont.%
 }
 {%
-	\end{algorithm2e}
+  \end{algorithm2e}
 }
 
 
@@ -220,18 +276,20 @@
 
 % Rename bibliography to references.
 \renewcommand{\bibname}{References}
+\RequirePackage{bibentry}             % show bib entry in text
 
 % Define a new command to include the bibliography file and 
 % set the formatting options.
 \newcommand{\SgIncludeBib}[1]
 {%
-	\clearpage                                 % Fix the page number in TOC.
-	\phantomsection                            % Fix the link in PDF.
-	\addcontentsline{toc}{chapter}{References} % Add the bibliography to TOC.
-	\bibliographystyle{alpha}                  % Set the bibliography style.
-	\bibliography{#1}                          % Include the bibliography file.
+  \clearpage                                 % Fix the page number in TOC.
+  \phantomsection                            % Fix the link in PDF.
+  \addcontentsline{toc}{chapter}{References} % Add the bibliography to TOC.
+  \bibliographystyle{dinat_en}                  % Set the bibliography style. dinat_en
+  \bibliography{#1}                          % Include the bibliography file.
 }
 
+\setcitestyle{authoryear, open={(},close={)}}
 
 
 % -----------------------------------------------------------------------
@@ -250,8 +308,9 @@
 % page number on right side.
 % \nouppercase is used on left header to force bibliography in lowercase.
 \fancyhead{} 
-\fancyhead[L]{\nouppercase{\SgIntHeaderFormat\leftmark}}
-\fancyhead[R]{\SgIntPageNumFormat\thepage}
+\fancyhead[RE]{\nouppercase{\SgIntHeaderFormat\leftmark}}
+\fancyhead[LO]{\nouppercase{\SgIntHeaderFormat\rightmark}}
+\fancyhead[LE, RO]{\SgIntPageNumFormat\thepage}
 \renewcommand{\headrulewidth}{1pt}
 \addtolength{\headheight}{10pt}
 
@@ -268,14 +327,14 @@
     
     % Footer contains the page number on right side.
     \fancyfoot{}
-    \fancyfoot[R]{\SgIntPageNumFormat\thepage}
+    \fancyfoot[LE, RO]{\SgIntPageNumFormat\thepage}
     \renewcommand{\footrulewidth}{0pt}
 }
 
 
 
 % -----------------------------------------------------------------------
-% T O C    L O F    L O T    L O A
+% T O C    L O F    L O T    L O A    L O A b b r v
 % 
 % Change the appearance of toc, lof, lot, etc.
 
@@ -283,12 +342,12 @@
 \RequirePackage[titles, subfigure]{tocloft}
 
 % Remove dots.
-\renewcommand{\cftdotsep}{\cftnodots}
+% \renewcommand{\cftdotsep}{\cftnodots}
 
 % Remove dots from list of algorithms.
 % This is necessary because we use algorithm2e which mananges its own list of algorithms.
 \makeatletter
-	\renewcommand{\@dotsep}{5000}
+  \renewcommand{\@dotsep}{5000}
 \makeatother
 
 % Format chapter entries differently in toc.
@@ -298,30 +357,53 @@
 \setlength{\cftfigindent}{0in}
 \setlength{\cfttabindent}{0in}
 
-\newcommand{\SgAddToc}{\tableofcontents\SgIntClearDoublePage}
+\newcommand{\SgAddToc}{\tableofcontents\label{toc}\SgIntClearDoublePage}
 \newcommand{\SgAddLof}{%
-	\newpage
-	\phantomsection % Requires hyperref; this is to fix the link.
-	\addcontentsline{toc}{section}{\numberline{}\hspace{-.35in}{\SgIntTocSectionFormat{}List of Figures}}
-	\listoffigures
-	\SgIntClearDoublePage
+  \newpage
+  \phantomsection % Requires hyperref; this is to fix the link.
+  \addcontentsline{toc}{section}{\numberline{}\hspace{-.35in}{\SgIntTocSectionFormat{}List of Figures}}
+  \listoffigures
+  \SgIntClearDoublePage
 }
 \newcommand{\SgAddLot}{%
-	\newpage
-	\phantomsection % Requires hyperref; this is to fix the link.
-	\addcontentsline{toc}{section}{\numberline{}\hspace{-.35in}{\SgIntTocSectionFormat{}List of Tables}}
-	\listoftables
-	\SgIntClearDoublePage
+  \newpage
+  \phantomsection % Requires hyperref; this is to fix the link.
+  \addcontentsline{toc}{section}{\numberline{}\hspace{-.35in}{\SgIntTocSectionFormat{}List of Tables}}
+  \listoftables
+  \SgIntClearDoublePage
 }
 \newcommand{\SgAddLoa}{%
-	\newpage
-	\phantomsection % Requires hyperref; this is to fix the link.
-	\addcontentsline{toc}{section}{\numberline{}\hspace{-.35in}{\SgIntTocSectionFormat{}List of Algorithms}}
-	\listofalgorithmes % Note an extra e, it is required because we use algorithm2e.
-	\SgIntClearDoublePage
+  \newpage
+  \phantomsection % Requires hyperref; this is to fix the link.
+  \addcontentsline{toc}{section}{\numberline{}\hspace{-.35in}{\SgIntTocSectionFormat{}List of Algorithms}}
+  \listofalgorithmes % Note an extra e, it is required because we use algorithm2e.
+  % \SgIntClearDoublePage
+}
+
+% Source Code Settings
+\RequirePackage{listings}
+\newcommand{\SgAddLos}{%
+% \newpage
+\phantomsection % Requires hyperref; this is to fix the link.
+\addcontentsline{toc}{section}{\numberline{}\hspace{-.35in}{\SgIntTocSectionFormat{}List of Source Codes}}
+\renewcommand\listoflistingscaption{List of Source Codes}
+\listoflistings
 }
 
 
+% List of Abbreviations
+
+\newcommand{\SgAddAbbrv}{%
+\newpage
+\phantomsection
+\addcontentsline{toc}{section}{\numberline{}\hspace{-.35in}{\SgIntTocSectionFormat{}List of Abbreviations}}
+\renewcommand{\nomname}{List of Abbreviations}
+% \renewcommand{\nomitemsep}{0pt}
+\setlength{\nomitemsep}{-\parsep}
+% \renewcommand{\nomlabel#1]{\hfill #1\hfill}  % Formatting the entries
+% \renewcommand{\nomentryend}{.}                % Adds a dot behind entries
+\printnomenclature[1in]
+}
 
 % -------------------------------------------------------------------------------------
 % C H A P T E R   H E A D I N G
@@ -342,40 +424,40 @@
 % Adjust the spacing between titles and surrounding matter.
 \RequirePackage{etoolbox}
 \makeatletter
-	% Reduce the space between chapter title and text.
-	\patchcmd{\DOTI}{\vskip 40\p@}{\vskip 20\p@}{}{}
-	\patchcmd{\DOTIS}{\vskip 40\p@}{\vskip 20\p@}{}{}% for unnumbered chapters
-	
-	% http://tex.stackexchange.com/questions/13357/fncychap-package-reduce-vertical-gap-space-between-header-and-chapter-heading
-	% Reduce the spacing between top margin and chapter title.
-	\renewcommand*{\@makechapterhead}[1]
-	{%
-		\vspace*{10\p@}
-		{%
-			\parindent \z@ \raggedright \normalfont
-			\ifnum \c@secnumdepth >\m@ne
-				\if@mainmatter % Fix for frontmatter, mainmatter, and backmatter 040920
-					\DOCH
-				\fi
-			\fi    
-			\interlinepenalty\@M    
-			\if@mainmatter     % Fix for frontmatter, mainmatter, and backmatter 060424
-				\DOTI{#1}%
-			\else%      
-				\DOTIS{#1}%
-			\fi
-		}
-	}
-	
-	% For the case \chapter*:
-	\renewcommand*{\@makeschapterhead}[1]
-	{%
-		\vspace*{10\p@}%
-		{%
-			\parindent \z@ \raggedright \normalfont 
-			\interlinepenalty\@M \DOTIS{#1} \vskip 10\p@
-		}
-	}
+  % Reduce the space between chapter title and text.
+  \patchcmd{\DOTI}{\vskip 40\p@}{\vskip 20\p@}{}{}
+  \patchcmd{\DOTIS}{\vskip 40\p@}{\vskip 20\p@}{}{}% for unnumbered chapters
+  
+  % http://tex.stackexchange.com/questions/13357/fncychap-package-reduce-vertical-gap-space-between-header-and-chapter-heading
+  % Reduce the spacing between top margin and chapter title.
+  \renewcommand*{\@makechapterhead}[1]
+  {%
+    \vspace*{10\p@}
+    {%
+      \parindent \z@ \raggedright \normalfont
+      \ifnum \c@secnumdepth >\m@ne
+        \if@mainmatter % Fix for frontmatter, mainmatter, and backmatter 040920
+          \DOCH
+        \fi
+      \fi    
+      \interlinepenalty\@M    
+      \if@mainmatter     % Fix for frontmatter, mainmatter, and backmatter 060424
+        \DOTI{#1}%
+      \else%      
+        \DOTIS{#1}%
+      \fi
+    }
+  }
+  
+  % For the case \chapter*:
+  \renewcommand*{\@makeschapterhead}[1]
+  {%
+    \vspace*{10\p@}%
+    {%
+      \parindent \z@ \raggedright \normalfont 
+      \interlinepenalty\@M \DOTIS{#1} \vskip 10\p@
+    }
+  }
 \makeatother
 
 
@@ -388,37 +470,37 @@
 \RequirePackage[hyphens]{url} % Embedding URL's in document.
 
 % Enable hyperlinks only in the PDF.
-\RequirePackage[bookmarks=true, pdfstartview=Fit, linktoc=page, pdfpagemode=UseNone]{hyperref}
+\RequirePackage[bookmarks=true, pdfstartview=Fit, linktoc=page, pdfpagemode=UseNone, pagebackref]{hyperref}
 
 % Define the colors of the hyperlink.
 \ifthenelse{\equal{\SgIntMedia}{screen}}
 {%
-	\definecolor{webgreen}{rgb}{0,.5,0} % previously used magenta.
-	\definecolor{webblue}{rgb}{0,0,1}   % previously used orange.
-	
-	\hypersetup
-	{%
-		colorlinks = true,
-		linkcolor  = webgreen,
-		citecolor  = cyan,
-		urlcolor   = webblue
-	}
+  \definecolor{webgreen}{rgb}{0,0.5,0} % previously used magenta.
+  \definecolor{webblue}{rgb}{0,0,1}   % previously used orange.
+  
+  \hypersetup
+  {%
+    colorlinks = true,
+    linkcolor  = webgreen,
+    citecolor  = cyan,
+    urlcolor   = webblue
+  }
 }{}
 \ifthenelse{\equal{\SgIntMedia}{print}}
 {%
-	\hypersetup{colorlinks=false,pdfborder={0 0 0}}
+  \hypersetup{colorlinks=false,pdfborder={0 0 0}}
 }{}
 
 % Define the proerties describing PDF.
 \newcommand{\SgIntSetupPdfProps}%
 {%
-	\hypersetup
-	{%
-		pdfauthor   = \SgIntAuthor, 
-		pdftitle    = \SgIntTitle, 
-		pdfsubject  = \SgIntSubject, 
-		pdfkeywords = \SgIntKeywords
-	}
+  \hypersetup
+  {%
+    pdfauthor   = \SgIntAuthor, 
+    pdftitle    = {\SgIntTitle\ {-}\ \SgIntSubTitle}, 
+    pdfsubject  = \SgIntSubject, 
+    pdfkeywords = \SgIntKeywords
+  }
 }
 
 
@@ -430,26 +512,36 @@
 
 % Define empty variables for creating title and setting PDF properties.
 \newcommand{\SgIntTitle}{}
+\newcommand{\SgIntSubTitle}{}
 \newcommand{\SgIntAuthor}{}
 \newcommand{\SgIntAuthorDegrees}{}
+\newcommand{\SgIntAuthorMatNr}{}
+\newcommand{\SgIntAuthorEmail}{}
 \newcommand{\SgIntYear}{}
 \newcommand{\SgIntSubject}{}
 \newcommand{\SgIntKeywords}{}
 \newcommand{\SgIntDegree}{}
+\newcommand{\SgIntSupervisors}{}
 \newcommand{\SgIntDepartment}{}
 \newcommand{\SgIntUniversity}{}
+\newcommand{\SgIntUniversityLogo}{}
 \newcommand{\SgIntDeclarationDate}{}
 
 % Define commands for setting  the above variables.
 \newcommand{\SgSetTitle}[1]{\renewcommand{\SgIntTitle}{#1}\SgIntSetupPdfProps}
+\newcommand{\SgSetSubTitle}[1]{\renewcommand{\SgIntSubTitle}{#1}\SgIntSetupPdfProps}
 \newcommand{\SgSetAuthor}[1]{\renewcommand{\SgIntAuthor}{#1}\SgIntSetupPdfProps}
+\newcommand{\SgSetAuthorMatNr}[1]{\renewcommand{\SgIntAuthorMatNr}{#1}}
+\newcommand{\SgSetAuthorEmail}[1]{\renewcommand{\SgIntAuthorEmail}{#1}}
 \newcommand{\SgSetAuthorDegrees}[1]{\renewcommand{\SgIntAuthorDegrees}{#1}}
 \newcommand{\SgSetYear}[1]{\renewcommand{\SgIntYear}{#1}}
 \newcommand{\SgSetSubject}[1]{\renewcommand{\SgIntSubject}{#1}\SgIntSetupPdfProps}
 \newcommand{\SgSetKeywords}[1]{\renewcommand{\SgIntKeywords}{#1}\SgIntSetupPdfProps}
 \newcommand{\SgSetDegree}[1]{\renewcommand{\SgIntDegree}{#1}}
+\newcommand{\SgSetSupervisors}[2]{\renewcommand{\SgIntSupervisors}{#1\\#2\\}}
 \newcommand{\SgSetDepartment}[1]{\renewcommand{\SgIntDepartment}{#1}}
 \newcommand{\SgSetUniversity}[1]{\renewcommand{\SgIntUniversity}{#1}}
+\newcommand{\SgSetUniversityLogo}[1]{\renewcommand{\SgIntUniversityLogo}{#1}}
 \newcommand{\SgSetDeclarationDate}[1]{\renewcommand{\SgIntDeclarationDate}{#1}}
 
 
@@ -484,34 +576,42 @@
 % -----------------------------------------------------------------------
 % T I T L E  P A G E
 \ifthenelse{\equal{\SgIntTitleCase}{upper}}
-{
-	\newcommand{\SgIntMakeUpperCase}[1]{\MakeUppercase{#1}}
+{%
+  \newcommand{\SgIntMakeUpperCase}[1]{\MakeUppercase{#1}}
 }
-{
-	\newcommand{\SgIntMakeUpperCase}[1]{#1}
+{%
+  \newcommand{\SgIntMakeUpperCase}[1]{#1}
 }
 \newcommand{\SgAddTitle}{%
-	\thispagestyle{empty}
-	\begin{center}
-		\vspace*{0.5in}
-		\Large{\bf{\SgIntMakeUpperCase{\SgIntTitle}}}
-		\\
-		\vspace{2.5in}
+  \thispagestyle{empty}
+  \begin{center}
+    \vspace*{0.5in}
+    \Large{\bf{\SgIntMakeUpperCase{\SgIntTitle}}} \\
+    \normalsize{\bf\SgIntMakeUpperCase{\SgIntSubTitle}}\\
+    \vspace{0.25in}
+    \hrulefill \\
+    \normalsize{\SgIntMakeUpperCase{A Thesis Submitted for the Degree of \SgIntDegree}}
 
-		\large{\SgIntMakeUpperCase{\SgIntAuthor}} \\
-		\large{\emph{\SgIntAuthorDegrees}} \\
-		\vspace{2.5in}
+    \vspace{0.8in}
 
-		\large{\SgIntMakeUpperCase{A Thesis Submitted for the Degree of \SgIntDegree}}
-		\vspace{0.2in}
+    \large{\SgIntMakeUpperCase{\SgIntAuthor}} \\
+    \large{\href{mailto:\SgIntAuthorEmail}{\SgIntAuthorEmail}} \\
+    \large{\emph{Mat-Nr.: \SgIntAuthorMatNr}} \\
 
-		\large{\SgIntMakeUpperCase{\SgIntDepartment}} \\
-		\large{\SgIntMakeUpperCase{\SgIntUniversity}} \\
-		\vspace{0.2in} 
+    \large{\emph{\SgIntAuthorDegrees}} \\
+    \vspace{0.8in}
 
-		\large{\SgIntYear}
-	\end{center}
-	\SgIntClearDoublePage
+    \large{Supervisors:\\{\SgIntSupervisors}}
+    \vspace{0.25in}
+    \large{\SgIntMakeUpperCase{\SgIntUniversity}}
+    \vspace{0.3cm}
+    \includegraphics[scale=1.2]{\SgIntUniversityLogo} \\
+    \vspace{0.2in} 
+    \hrulefill \\
+    \normalsize{\SgIntYear}
+  \end{center}
+
+  \SgIntClearDoublePage
 }
 
 
@@ -519,40 +619,40 @@
 % -----------------------------------------------------------------------
 % D E C L A R A T I O N  P A G E
 \newcommand{\SgAddDeclaration}[1][nosignimage]{%
-	\newpage
-	\thispagestyle{plain}
-	\begin{center}
-	\vspace*{1.5cm}
-	{
-		\Large \bfseries Declaration
-	}
-	\end{center}
+  \newpage
+  \thispagestyle{plain}
+  \begin{center}
+  \vspace*{1.5cm}
+  {%
+    \Large \bfseries Declaration
+  }
+  \end{center}
 
-	\vspace{0.5cm}
+  \vspace{0.5cm}
 
-	\begin{quote}
-	I hereby declare that this thesis is my original work and it has been written by me in its entirety. I have duly acknowledged all the sources of information which have been used in the thesis. \newline
+  \begin{quote}
+  I hereby declare that this thesis is my original work and it has been written by me in its entirety. I have duly acknowledged all the sources of information which have been used in the thesis. \newline
 
-	This thesis has also not been submitted for any degree in any university previously.
-	\end{quote}
+  This thesis has also not been submitted for any other degree in any other university previously.
+  \end{quote}
 
-	\ifthenelse{\equal{#1}{nosignimage}}
-	{
-	    \vspace{2.0cm}
-	}
-	{
-		\vspace{0.5cm}
-	}
+  \ifthenelse{\equal{#1}{nosignimage}}
+  {%
+      \vspace{2.0cm}
+  }
+  {%
+    \vspace{0.5cm}
+  }
 
-	\begin{center}
-		\ifthenelse{\equal{#1}{nosignimage}}
-		{}{\includegraphics{#1}\\[-0.5cm]}
-		\rule{5cm}{0.2mm} \\
-		\SgIntAuthor \\
-		\SgIntDeclarationDate
-	\end{center}
+  \begin{center}
+    \ifthenelse{\equal{#1}{nosignimage}}
+    {}{\includegraphics{#1}\\[-0.5cm]}
+    \rule{5cm}{0.2mm} \\
+    \SgIntAuthor \\
+    \SgIntDeclarationDate
+  \end{center}
 
-	\SgIntClearDoublePage
+  \SgIntClearDoublePage
 }
 
 
@@ -566,19 +666,19 @@
 % sides, and on its own page.
 \newenvironment{acknowledgments}%
 {%
-	\thispagestyle{plain}
-	\begin{center}
-		\vspace*{1.5cm}
-		{%
-			\Large \bfseries Acknowledgments
-		}
-	\end{center}
-	\vspace{0.5cm}
-	\begin{quote}
+  \thispagestyle{plain}
+  \begin{center}
+    \vspace*{1cm}
+    {%
+      \Large \bfseries Acknowledgments
+    }
+  \end{center}
+  \vspace{0.5cm}
+  \begin{quote}
 }
 {%
     \end{quote}
-	\SgIntClearDoublePage
+  \SgIntClearDoublePage
 }
 
 
@@ -589,19 +689,17 @@
 % The abstract environment puts a large, bold, centered "Abstract" label at
 % the top of the page. The abstract itself appears in a quote environment,
 % i.e. tabbed in at both sides, and on its own page.
-\renewenvironment{abstract}
-{%
+\renewenvironment{abstract}{%
     \thispagestyle{plain}
-	\begin{center}
-		\vspace*{1.5cm}
-		{\Large\bfseries Abstract}
-	\end{center}
-	\vspace{0.5cm}
-	\begin{quote}
-}
-{%
+  \begin{center}
+    \vspace*{1.5cm}
+    {\Large\bfseries Abstract}
+  \end{center}
+  \vspace{0.5cm}
+  \begin{quote}
+}{%
     \end{quote}
-	\SgIntClearDoublePage
+  \SgIntClearDoublePage
 }
 
 
@@ -614,12 +712,25 @@
 % remainder of thesis (arabic, starting at 1).
 \newenvironment{frontmatter}
 {%
- 	\setcounter{page}{1}
-	\renewcommand{\thepage}{\roman{page}}
+  \pagestyle{plain}
+  \setcounter{page}{1}
+  \renewcommand{\thepage}{\roman{page}}
+  \fancyfoot{}
+  \fancyfoot[LE, RO]{\SgIntPageNumFormat\thepage}
+
 }
 {%
-	\clearpage
-	\renewcommand{\thepage}{\arabic{page}}
-	\setcounter{page}{1}
-	\SgIntClearDoublePage
+  \clearpage
+  \renewcommand{\thepage}{\arabic{page}}
+  \setcounter{page}{1}
+  \SgIntClearDoublePage
+  \pagestyle{fancy}
+}
+
+% -----------------------------------------------------------------------
+% U T I L I T Y
+
+% switch argument (picture path) depending on specified media flag
+\newcommand{\mediaPathSwitch}[2]{\ifthenelse{\equal{\SgIntMedia}{screen}}{#1}{}
+\ifthenelse{\equal{\SgIntMedia}{print}}{#2}{}
 }
