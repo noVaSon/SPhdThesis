@@ -1,14 +1,15 @@
 
-% SPhdThesis v1.0
+% SPhdThesis v1.1
 % By Saurabh Garg (saurabhgarg@mysoc.net)
 % Edited by Eric Lehmann (coding@kernschall.de)
 % Version 1.1 released 01.08.2019
 
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{SPhdThesis}[2013/06/11 v1.0 SPhdThesis class]
+\ProvidesClass{SPhdThesis}[2019/08/01 v1.1 SPhdThesis class]
 
 \RequirePackage{xkeyval}
 
+%%%%%%%%%%%%%%%%%%% D E F I N I T I O N S %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % -----------------------------------------------------------------------------
 % Define option for formatting for [screen] and print.
 % When formatting for screen colors are used for links, tables, and algorithms.
@@ -45,7 +46,7 @@
 
 % -----------------------------------------------------------------------------
 % Define open. The valid values are right and [any].
-% Right makes chapters and entries in frontmatter begin  only on right hand pages 
+% Right makes chapters and entries in frontmatter begin only on right hand pages 
 % or on the next page available. Any puts them on the next available page.
 \define@choicekey*[Sg]{PhDThesis}{open}[\val\nr]{right,any}[any]{%
   \ifcase\nr\relax
@@ -70,7 +71,7 @@
 \LoadClass[a4paper, \SgIntFontSize, \SgIntOpen, \SgIntPageSide]{report}
 
 
-
+%%%%%%%%%%%%%%%%%%% F O R M A T T I N G  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % -----------------------------------------------------------------------
 % F O N T S.
 
@@ -113,28 +114,28 @@
 % 
 % Include important packages.
 
-\RequirePackage{graphicx, subfig}                     % Figures.
-\RequirePackage{amsmath, amssymb, amsthm}             % Math symbols and fonts.
-\RequirePackage{float}                                % Must be done before hyperref.
-\RequirePackage{csvsimple}                            % For csv import (from ods)                                
-\RequirePackage[usenames,dvipsnames,hyperref]{xcolor} % For defining colors.
-\RequirePackage{ifthen}                               % For comparison.
-\RequirePackage[cache=false, outputdir=.texpadtmp]{minted}                  % For source code linting
-\RequirePackage{fancyvrb}
-\RequirePackage{wrapfig}                              % For text wrapping around figures
-\RequirePackage[round,authoryear]{natbib}             % For more elegant citations
-\RequirePackage{enumitem}                             % For alphabetical enums
-\RequirePackage{pdflscape}                            % For landscape pages
-\RequirePackage[refpage]{nomencl}                   % For list of abbreviations
-\makenomenclature
+\RequirePackage{graphicx, subfig}                           % Figures.
+\RequirePackage{amsmath, amssymb, amsthm}                   % Math symbols and fonts.
+\RequirePackage{float}                                      % Must be done before hyperref.
+\RequirePackage{csvsimple}                                  % For csv import (from ods)                                
+\RequirePackage[usenames,dvipsnames,hyperref]{xcolor}       % For defining colors.
+\RequirePackage{ifthen}                                     % For comparison.
+\RequirePackage[cache=false, outputdir=.texpadtmp]{minted}  % For source code linting
+\RequirePackage{fancyvrb}                                   % For special heading styling
+\RequirePackage{wrapfig}                                    % For text wrapping around figures
+\RequirePackage[round,authoryear]{natbib}                   % For more elegant citations
+\RequirePackage{enumitem}                                   % For alphabetical enums
+\RequirePackage{pdflscape}                                  % For landscape pages
+\RequirePackage[refpage]{nomencl}                           % For list of abbreviations
+\makenomenclature                                           % must be placed here already in order to make it work
 
-\RequirePackage{pgf}                              % For rendering matplotlib plots in latex
+\RequirePackage{pgf}                                        % For rendering matplotlib plots in latex
 
 % -----------------------------------------------------------------------
 % S O U R C E  C O D E  E X A M P L E S
 
 \definecolor{lightgray}{rgb}{0.96, 0.96, 0.96}
-\RequirePackage{mdframed}                             % For colored minting boxes
+\RequirePackage{mdframed}                                   % For colored minting boxes
 \surroundwithmdframed[
   hidealllines=true,
   backgroundcolor=lightgray,
@@ -149,6 +150,7 @@
   skipabove=\baselineskip
 ]{verbatim}
 
+% disable color when media option ist set to print
 \ifthenelse{\equal{\SgIntMedia}{screen}}{\usemintedstyle{emacs}}{}
 \ifthenelse{\equal{\SgIntMedia}{print}}{\usemintedstyle{bw}}{}
 
@@ -230,8 +232,8 @@
 % 
 % Set table layout and design.
 
-\RequirePackage{booktabs, colortbl} % Tables.
-\RequirePackage{tabularx}           % Auto column sizing.
+\RequirePackage{booktabs, colortbl}   % Tables.
+\RequirePackage{tabularx}             % Auto column sizing.
 
 \renewcommand{\arraystretch}{1.5}     % Set space between rows in a table.
 \renewcommand{\tabcolsep}{0.20cm}     % Set space between columns in a table.
@@ -276,17 +278,17 @@
 
 % Rename bibliography to references.
 \renewcommand{\bibname}{References}
-\RequirePackage{bibentry}             % show bib entry in text
+\RequirePackage{bibentry}                     % show bib entry in text
 
 % Define a new command to include the bibliography file and 
 % set the formatting options.
 \newcommand{\SgIncludeBib}[1]
 {%
-  \clearpage                                 % Fix the page number in TOC.
-  \phantomsection                            % Fix the link in PDF.
-  \addcontentsline{toc}{chapter}{References} % Add the bibliography to TOC.
-  \bibliographystyle{dinat_en}                  % Set the bibliography style. dinat_en
-  \bibliography{#1}                          % Include the bibliography file.
+  \clearpage                                  % Fix the page number in TOC.
+  \phantomsection                             % Fix the link in PDF.
+  \addcontentsline{toc}{chapter}{References}  % Add the bibliography to TOC.
+  \bibliographystyle{dinat_en}                % Set the bibliography style. dinat_en
+  \bibliography{#1}                           % Include the bibliography file.
 }
 
 \setcitestyle{authoryear, open={(},close={)}}
@@ -392,7 +394,6 @@
 
 
 % List of Abbreviations
-
 \newcommand{\SgAddAbbrv}{%
 \newpage
 \phantomsection
@@ -730,7 +731,11 @@
 % -----------------------------------------------------------------------
 % U T I L I T Y
 
-% switch argument (picture path) depending on specified media flag
-\newcommand{\mediaPathSwitch}[2]{\ifthenelse{\equal{\SgIntMedia}{screen}}{#1}{}
+% To provide grayscale pictures for print use this switch.
+% Switches images depending on the specified media flag (screen or print) -
+% Wrap \includegraphics commands inside the curly braces behind the \mediaPathSwitch. 
+% First argument is the path for colored graphics, second argument is for grayscale versions.
+\newcommand{\mediaPathSwitch}[2]{%
+\ifthenelse{\equal{\SgIntMedia}{screen}}{#1}{}
 \ifthenelse{\equal{\SgIntMedia}{print}}{#2}{}
 }
