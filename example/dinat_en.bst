@@ -19,11 +19,11 @@
 %%      \gdef\NAT@biblabelnum##1{\textbf{##1}}}
 %%------------------------------------------------------------------------------
 %% The form of the \bibitem entries is
-%%   \bibitem[Jones et al. (1990)Jones, Baker und Smith]{key}...
+%%   \bibitem[Jones et al. (1990)Jones, Baker and Smith]{key}...
 %% If there are more [Jones u. a. 1990], a single character is added to 
-%% the year like in [Jones u.a.(1990{\natexlab{a}})Jones, Baker und Smith].
+%% the year like in [Jones u.a.(1990{\natexlab{a}})Jones, Baker and Smith].
 %% The resulting bibliography entry is
-%%   \textsc{Jones}, \textsc{Baker} und \textsc{Smith} ...
+%%   \textsc{Jones}, \textsc{Baker} and \textsc{Smith} ...
 %% The \cite command functions as follows:
 %%   \cite{key}                ==>>  Jones et al. (1990)
 %%   \cite[chap. 2]{key}       ==>>  (Jones et al. 1990, chap. 2)
@@ -32,9 +32,9 @@
 %%   \citep{key}               ==>>  (Jones et al. 1990)
 %%   \citep*{key}              ==>>  (Jones, Baker and Smith 1990)
 %%   \citet{key}               ==>>  Jones et al. (1990)
-%%   \citet*{key}              ==>>  Jones, Baker und Smith (1990)
+%%   \citet*{key}              ==>>  Jones, Baker and Smith (1990)
 %%   \citeauthor{key}          ==>>  Jones et al.
-%%   \citeauthor*{key}         ==>>  Jones, Baker und Smith
+%%   \citeauthor*{key}         ==>>  Jones, Baker and Smith
 %%   \citeyear{key}            ==>>  1990
 %%------------------------------------------------------------------------------
 %% This bibliography style file is intended for texts in english.
