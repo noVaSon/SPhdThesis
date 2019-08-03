@@ -19,25 +19,25 @@
 %%      \gdef\NAT@biblabelnum##1{\textbf{##1}}}
 %%------------------------------------------------------------------------------
 %% The form of the \bibitem entries is
-%%   \bibitem[Jones u. a.(1990)Jones, Baker und Smith]{key}...
+%%   \bibitem[Jones et al. (1990)Jones, Baker und Smith]{key}...
 %% If there are more [Jones u. a. 1990], a single character is added to 
 %% the year like in [Jones u.a.(1990{\natexlab{a}})Jones, Baker und Smith].
 %% The resulting bibliography entry is
 %%   \textsc{Jones}, \textsc{Baker} und \textsc{Smith} ...
 %% The \cite command functions as follows:
-%%   \cite{key}                ==>>  Jones u. a. (1990)
-%%   \cite[chap. 2]{key}       ==>>  (Jones u. a. 1990, chap. 2)
-%%   \cite[e.g.][]{key}        ==>>  (e.g. Jones u. a. 1990)
-%%   \cite[e.g.][p. 32]{key}   ==>>  (e.g. Jones u. a. p. 32)
-%%   \citep{key}               ==>>  (Jones u. a. 1990)
-%%   \citep*{key}              ==>>  (Jones, Baker und Smith 1990)
-%%   \citet{key}               ==>>  Jones u. a. (1990)
+%%   \cite{key}                ==>>  Jones et al. (1990)
+%%   \cite[chap. 2]{key}       ==>>  (Jones et al. 1990, chap. 2)
+%%   \cite[e.g.][]{key}        ==>>  (e.g. Jones et al. 1990)
+%%   \cite[e.g.][p. 32]{key}   ==>>  (e.g. Jones et al. p. 32)
+%%   \citep{key}               ==>>  (Jones et al. 1990)
+%%   \citep*{key}              ==>>  (Jones, Baker and Smith 1990)
+%%   \citet{key}               ==>>  Jones et al. (1990)
 %%   \citet*{key}              ==>>  Jones, Baker und Smith (1990)
-%%   \citeauthor{key}          ==>>  Jones u. a.
+%%   \citeauthor{key}          ==>>  Jones et al.
 %%   \citeauthor*{key}         ==>>  Jones, Baker und Smith
 %%   \citeyear{key}            ==>>  1990
 %%------------------------------------------------------------------------------
-%% This bibliography style file is intended for texts in german.
+%% This bibliography style file is intended for texts in english.
 %% It draws up bibliographies in accordance with the german DIN 1505, 
 %% part 2 and 3, as discribed in the german text
 %% http://www.fh-hamburg.de/pers/Lorenzen/tum/litverz.ps
@@ -61,7 +61,7 @@
 %%------------------------------------------------------------------------------
 %% Author(s):
 %%   HB: Helge Baumann, helge.baumann@gmx.de
-%%   EL: Eric Lehmann,  eric.lehmann@kernschall.de
+%%   EL: Eric Lehmann,  coding@kernschall.de
 %%------------------------------------------------------------------------------
 %% History:
 %%   (only main changes are listed, for others see the webpage)
@@ -103,6 +103,8 @@
 %%                      restructured format.dashes
 %%   2000-11-14 (HB): version 2.5:
 %%                      always use key for label if present
+%%   2019-08-01 (EL): version 3.0 (english)
+%%			translates the junction wors and comments of the .bst file
 %%------------------------------------------------------------------------------
 
 
@@ -112,7 +114,7 @@
 FUNCTION {push.bd}        { "vol." }
 FUNCTION {push.diplom}    { "Diploma thesis" }
 FUNCTION {push.disser}    { "PhD thesis" }
-FUNCTION {push.forschung} { "Report" }
+FUNCTION {push.forschung} { "report" }
 FUNCTION {push.hrsg}      { "publ." }
 FUNCTION {push.in}        { "In:" }
 FUNCTION {push.isbn}      { "ISBN" }
@@ -125,7 +127,7 @@ FUNCTION {push.siehe}     { "see" }
 FUNCTION {push.ua}        { "et\ al." }
 FUNCTION {push.und}       { "and" }
 FUNCTION {push.url.name}  { "URL" }
-FUNCTION {push.veranst}   { "Veranst." }
+FUNCTION {push.veranst}   { "promoter" }
 FUNCTION {push.von}       { "by" }
 FUNCTION {push.zugriff}   { "last access date" }
 
