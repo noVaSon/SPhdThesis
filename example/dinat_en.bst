@@ -1,6 +1,6 @@
 %% DINAT.BST   Version 2.5   2000-11-14 
 %% (c) Helge Baumann   email:Helge.Baumann@gmx.de
-%% modified by Eric Lehmann email: eric.lehmann@kernschall.de
+%% modified by Eric Lehmann email: coding@kernschall.de
 %%------------------------------------------------------------------------------
 %% For use with BibTeX version 0.99a or later.
 %%------------------------------------------------------------------------------
