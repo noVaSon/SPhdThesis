@@ -70,6 +70,20 @@
 % Finally load the report class.
 \LoadClass[a4paper, \SgIntFontSize, \SgIntOpen, \SgIntPageSide]{report}
 
+% -----------------------------------------------------------------------
+% U T I L I T Y
+
+% To provide grayscale pictures for print use this switch.
+% Switches images depending on the specified media flag (screen or print) -
+% Wrap the path argument of the \includegraphics command 
+% inside the curly braces behind the \mediaPathSwitch.  
+% First argument is the path for colored graphics, second argument is for grayscale versions.
+% Example: \includegraphics{\SgIntMedia{./pics/img1.png}{./bwpics/img1.png}}
+\newcommand{\mediaPathSwitch}[2]{%
+\ifthenelse{\equal{\SgIntMedia}{screen}}{#1}{}
+\ifthenelse{\equal{\SgIntMedia}{print}}{#2}{}
+}
+
 
 %%%%%%%%%%%%%%%%%%% F O R M A T T I N G  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % -----------------------------------------------------------------------
@@ -728,14 +742,4 @@
   \pagestyle{fancy}
 }
 
-% -----------------------------------------------------------------------
-% U T I L I T Y
 
-% To provide grayscale pictures for print use this switch.
-% Switches images depending on the specified media flag (screen or print) -
-% Wrap \includegraphics commands inside the curly braces behind the \mediaPathSwitch. 
-% First argument is the path for colored graphics, second argument is for grayscale versions.
-\newcommand{\mediaPathSwitch}[2]{%
-\ifthenelse{\equal{\SgIntMedia}{screen}}{#1}{}
-\ifthenelse{\equal{\SgIntMedia}{print}}{#2}{}
-}
