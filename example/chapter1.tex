@@ -1,11 +1,136 @@
-\chapter{Introduction}
-Automatic 3D reconstruction of real objects plays an important role in many applications such as animation, virtual reality, and gaming. A widely used approach to reconstruct an object is by using a 3D laser range scanner. Since range scanners have limited field of view, acquisition of 3D geometry of an object requires taking several scans from different viewpoints. The main difficulty with this method is to combine these scans into a unique surface representing the object. This typically involves two steps. First, all the scans must be transformed into the same coordinate system by a process known as surface registration. Second, the registered scans must be integrated into a single model by a process known as surface integration. In this paper we focus on surface integration, assuming the scans have been acquired and registered in a common coordinate system.
+\chapter{chapter 1}
+\label{ch:chapter1}
 
-\section{First section}
-Existing surface integration methods for range images can be classified into two categories: volume-based and mesh-based. Volume-based methods \cite{Claes:VolM05,Curless:VolM96,Masuda:VolM02,Hoppe:VolM97,Sato:VolM97,Sun:VolM03} convert range images into an intermediate volumetric representation using a signed distance function and extract the final surface using a polygonizing algorithm. These methods can handle objects of arbitrary topology and are considered to be robust with respect to scanning noise, outliers and registration errors. The choice of appropriate voxel size is important for these methods \cite{Claes:VolM05,Curless:VolM96}. If the voxel size is too large, then features smaller than the voxel size are missed and opposite surfaces of a narrow region will be merged. If the voxel size is too small, then in the presence of scanning noise or registration errors, corresponding surfaces will be reconstructed as separate surfaces. It still remains unanswered as to what extent the signed distance function computed on the discretized space is sensitive to the presence of noisy data. It is also not clear how to choose an appropriate voxel size when the input range images have both small features and registration errors. \\
+I used the commercial Latex editor Texpad (1.8.9), because I needed to speed up the initial setup time.  To focus on the content and structure I first wrote a short draft with Markup. I was quite in a hurry when I found out, that Markup to Latex conversion is not that gapless as I hoped.
 
-Mesh-based methods \cite{Pito:MeshM96,Rutishauser:MeshM94,Sappa:MeshM00,Soucy:MeshM92,Soucy:MeshM95,Sun:MeshM00,Turk:MeshM94,Zhou:MeshM06} directly integrate range images into a single mesh. These methods do not need an intermediate representation. Hence, they are faster and require less memory compared to volumetric methods. In addition, they are more amenable to data reduction during processing which makes them more feasible for use with very large meshes. Existing methods are, however, sensitive to scanning errors and do not work well on objects with large surface curvature \cite{Curless:VolM96}.
+When everything went well you should see the following content:
 
-\input{figure}
-\input{table}
-\input{algorithm}
+\begin{itemize}
+	\item Title page
+	\item \textit{Blank Page}
+	\item Acknowledgements
+	\item \textit{Blank Page}
+	\item Abstract
+	\item \textit{Blank Page}
+	\item Table of contents
+	\item \textit{Blank Page}
+	\item List of Abbreviations (nomenclature)
+	\item \textit{Blank Page}
+	\item List of Figures
+	\item \textit{Blank Page}
+	\item List of Tables
+	\item \textit{Blank Page}
+	\item List of source codes (listings)
+	\item \textit{Blank Page}
+	\item Chapter1
+	\item Chapter2
+	\item \textit{Blank Page}
+	\item Chapter3
+	\item References (Bibliography)
+	\item Declaration
+\end{itemize}
+
+Internal links to other pages of the document should be green, external links (URLs) should appear blue. If you set the option media=print, these colors will be changed to black. You find this line in \textit{thesis.tex}.
+
+To have source code linted (colored depending on input e.g. variables other than functions), have a look at the "minted" package on CTAN \href{http://tug.ctan.org/tex-archive/macros/latex/contrib/minted/minted.pdf}{here}.
+
+\begin{verbatim}
+\documentclass[media=screen]{SPhdThesis}
+\end{verbatim}
+
+You can speed up rendering by using only placeholders instead of images by adding the "draft" option:
+
+\begin{verbatim}
+\documentclass[media=screen, draft]{SPhdThesis}
+\end{verbatim}
+
+
+
+If you decide to get rid of an unnecessary part of the frontmatter, just comment it out in the main \.tex file: \(thesis.tex\). 
+
+\begin{listing}
+\begin{verbatim}
+	\begin{frontmatter}
+		\input{acknowledgments} %
+		\SgIntClearDoublePage
+		\input{quotation} %
+		\input{abstract} %
+		\SgAddToc %  Table of contents.
+		\SgAddAbbrv % List of abbreviations
+		\SgAddLof %  List of figures.
+		\SgAddLot %  List of tables.
+		\SgAddLos %  List of source codes
+		\SgAddLoa %  List of algorithms.
+	\end{frontmatter}
+\end{verbatim}
+\caption{Latex code in the main document \textit{thesis.tex}}
+\label{lst:latexexample}
+\end{listing}
+
+\section{citation examples}
+\label{sec:citeationexamples}
+
+The exact styling used by the citation commands derives from the chosen .bst (bibtex style document).
+
+Always think of proper citation - this is Author year style as defined in the .bst
+
+\begin{verbatim}
+	\cite{cooper_about_2014}
+\end{verbatim}
+Example:	
+	\cite{cooper_about_2014}
+
+But you can also only cite the year of a publication 
+
+\begin{verbatim}
+	\citeyear{cooper_about_2014}
+\end{verbatim} 
+
+Example:
+	\citeyear{cooper_about_2014}
+
+There is even a command to put the year in parenthesis 
+
+
+\begin{verbatim}
+	\citeyearpar{cooper_about_2014}.
+\end{verbatim} 
+
+Example:
+\citeyearpar{cooper_about_2014}
+
+To include a reference in the bibliography without having to cite it in the text, use:
+
+\begin{verbatim}
+	\nocite{cooper_about_2014}
+\end{verbatim}
+
+	or to include all entries inside the .bib file, even the not cited ones:
+
+\begin{verbatim}
+	\nocite*	
+\end{verbatim}
+\nocite*
+
+% nomenclature example, for List of Abbreviations
+
+Don't forget to feed your nomenclature:
+Communication is the key to superior results, think of
+computer interface (HCI\nomenclature{HCI}{Human Computer Interface}) aspects.
+
+
+\section{Motivation}
+\label{sec:ch01_motivation}
+
+Always think of people you enjoy.
+% 
+
+\input{fig_barbara}
+
+\pagebreak
+
+\section{Structure}
+\label{subsec:ch01_structure}
+
+In chapter \ref{ch:chapter2} you find a link back to this chapter.
+

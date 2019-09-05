@@ -1,29 +1,53 @@
-
-\documentclass{SPhdThesis}
+% choose between screen or print "media" option in order to render more or less colored pages
+\documentclass[media=screen, open=right, fontsize=12pt, twoside]{SPhdThesis}
+% open=right  => chapters always start on the right side of a double page, alternative: any
+% twoside means the printing style. Affects position of the page number. Alternative: oneside
+% draft => option to speed up rendering during edit, renders boxes instead of images
+	\usepackage{natbib}
 
 % PDF and title properties.
-\SgSetTitle{A Robust Mesh-based Surface Integration Algorithm}
-\SgSetAuthor{Saurabh Garg}
-\SgSetAuthorDegrees{List your previous degrees here}
-\SgSetYear{2013}
-\SgSetDegree{Doctor of Philosophy}
-\SgSetDepartment{Department of Computer Science}
-\SgSetUniversity{National University of Singapore}
-\SgSetDeclarationDate{June 2013}
-
+\SgSetTitle{Title}
+\SgSetSubTitle{Subtitle}
+\SgSetAuthor{Full Name}
+\SgSetAuthorMatNr{xxxx}
+\SgSetAuthorEmail{fse@kernschall.de}
+\SgSetAuthorDegrees{current degree}
+\SgSetYear{01.	November 2018}
+\SgSetDegree{Degree aimed at}
+%\SgSetDepartment{Sound for Picture}
+%\SgSetUniversity{Film University Babelsberg Konrad Wolf}
+\SgSetDeclarationDate{01. November 2018}
+\SgSetUniversityLogo{./pictures/Logo_HFF_ohne_Adresse_besserer_Text_transparent.png}
+\SgSetKeywords{Sound effects retrieval, Interface design, audio post-production, Web-development}
+\SgSetSupervisors{Prof. Dr. One}{Prof. Dr. Two}
+		
 % The document.
 \begin{document}
+		\SgAddTitle %
+		\clearpage{\pagestyle{empty}\cleardoublepage}
 	\begin{frontmatter}
-		\SgAddTitle%
-		\SgAddDeclaration%
-		\input{acknowledgments}%
-		\input{abstract}%
-		\SgAddToc%  Table of contents.
-		\SgAddLof%  List of figures.
-		\SgAddLot%  List of tables.
-		\SgAddLoa%  List of algorithms.
+		\input{acknowledgments} %
+		\SgIntClearDoublePage
+		\input{quotation} %
+		\input{abstract} %
+		\SgAddToc %  Table of contents.
+		\SgAddAbbrv % List of abbreviations
+		\SgAddLof %  List of figures.
+		\SgAddLot %  List of tables.
+		\SgAddLos %  List of source codes (take a look at the "minted" package - requires python
+%		\SgAddLoa %  List of algorithms.
 	\end{frontmatter}
-   
+	\clearpage{\pagestyle{empty}\cleardoublepage}	
+	
 	\input{chapter1}
-	\SgIncludeBib{biblio}
+	\input{chapter2}
+	\SgIntClearDoublePage % sometimes it is neccessary to insert a clear page in order to open the chapter right...
+	\input{chapter3}
+
+	\bibliographystyle{dinat_en}
+	\bibliography{bibliography}
+%	\SgIncludeBib{bibliography}
+
+	\SgAddDeclaration %
+
 \end{document}

@@ -1,16 +1,17 @@
-\begin{table}[t]
-\caption{Statistics for the time taken to merge various models}
-\label{table:Ch1-Stats}
-\centering
-\begin{tabular}{lcccc}
-	\toprule
-	\textbf{Model} & \textbf{Num. Scans} & \textbf{Input Triangles} & \textbf{Output Triangles} & \textbf{Time Taken (secs)} \\
-	\midrule
-	Drill & 14 & 102284 & 19152 & 159 \\
-	Hello Kitty & 9 & 83627 & 27856 & 237 \\
-	Warrior & 10 & 133927 & 34613 & 315 \\
-	Doll & 9 & 146080 & 54022 & 479 \\
-	Mug & 6 & 114347 & 68129 & 613 \\
+\begin{table}[h]
+%\caption{Feature frequency among various search related software solutions}
+\label{tab:ch04_app_freq}
+	\centering
+	\begin{tabularx}{\linewidth}{p{0.22\linewidth}||p{0.13\linewidth}|p{0.08\linewidth}|p{0.11\linewidth}|p{0.08\linewidth}|p{0.08\linewidth}|p{0.11\linewidth}}
+%		\toprule
+		& Spreadsheet view & Grid view & Color mapping & Scatter-plot & Glyphs & Inline Preview\tabularnewline
+		\toprule
+%		\endhead
+		Metadata Management Software & 8 & 1 & 1 & 0 & 0 & 2\tabularnewline
+		Interactive Visualization Software & 3 & 5 & 6 & 6 & 3 & 5\tabularnewline
 	\bottomrule
-\end{tabular} 
+	\end{tabularx}
+	\caption[Metadata application feature frequency]{Metadata application feature frequency\footnotemark}
+	\label{tab:appfeatfreq}
 \end{table}
+\footnotetext{ you can even have footnotes in captions! See: \ref{fig:ch02_barbara} and \ref{fig:tristimequations} on page \pageref{fig:tristimequations}}

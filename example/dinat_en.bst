@@ -104,7 +104,7 @@
 %%   2000-11-14 (HB): version 2.5:
 %%                      always use key for label if present
 %%   2019-08-01 (EL): version 3.0 (english)
-%%			translates the junction wors and comments of the .bst file
+%%      translates the junction words and comments of the .bst file
 %%------------------------------------------------------------------------------
 
 
@@ -290,11 +290,11 @@ FUNCTION {or}
 %%------------------------------------------------------------------------------
 INTEGERS { output.state 
            before.all 
-	   mid.sentence 
-	   after.sentence 
-	   after.block
-	   colon.after 
-	   period.dash }
+     mid.sentence 
+     after.sentence 
+     after.block
+     colon.after 
+     period.dash }
 
 FUNCTION {init.state.consts}
 % initialisation of the state variables
@@ -441,18 +441,18 @@ FUNCTION {format.full.names}
     { s nameptr "{vv~}{ll}" format.name$ 't :=
       nameptr #1 =
         { % first name
-	  t *
+    t *
         }
         { namesleft #1 =
             { % last name
-	      t "others" =
+        t "others" =
                 { " " * push.ua * }
                 { " " * push.und * " " * t * }
               if$
             }
             { % other names
-	      ", " * t * 
-	    } 
+        ", " * t * 
+      } 
           if$
         }
       if$
@@ -622,7 +622,7 @@ FUNCTION {format.names}
                   { u #1 pos #1 - substring$ 'v := }
                   { skip$ }
                 if$
-		% cut second and more first names
+    % cut second and more first names
                 v u pos #2 substring$ * "." * 'v := 
               }
               { skip$ }
@@ -632,7 +632,7 @@ FUNCTION {format.names}
        while$ % { pos len < }
        v "" =
          { u 'v := }
-	 { skip$ }
+   { skip$ }
        if$
        % third get all "von"
        s nameptr "{ vv}" format.name$ 'u :=
@@ -641,11 +641,11 @@ FUNCTION {format.names}
        
        nameptr #1 =
          { %first name
-	   t *
+     t *
          }
          { namesleft #1 =
              { % last name
-	       t "others" format.smallcaps = 
+         t "others" format.smallcaps = 
                t "others" format.smallcaps hrsg * = 
                or
                  { " " * push.ua * }
@@ -653,8 +653,8 @@ FUNCTION {format.names}
                if$
              }
              { % other names
-	       "~; " * t * 
-	     }
+         "~; " * t * 
+       }
            if$
          }
        if$
@@ -726,7 +726,7 @@ FUNCTION {push.url}
     { push.url.name " \url{" * url * "}" * 
       urldate empty$
         { skip$ }
-	{ ". -- " * push.zugriff * ": " * urldate * }
+  { ". -- " * push.zugriff * ": " * urldate * }
       if$
     }
   if$
@@ -771,7 +771,7 @@ FUNCTION {push.address.publisher.year}
           if$
         }
         { publisher 
-	  year empty$
+    year empty$
             { "there's a publisher but no year in " cite$ * warning$ }
             { ", " * push.date * }
           if$
@@ -784,8 +784,8 @@ FUNCTION {push.address.publisher.year}
         { "~: " * publisher * }
       if$
       year empty$
-	{ skip$ }
-	{ ", " * push.date * }
+  { skip$ }
+  { ", " * push.date * }
       if$
     }
   if$
@@ -804,7 +804,7 @@ FUNCTION {push.btitle.vol}
 { number empty$
     { series empty$
         { push.btitle
-	  volume empty$
+    volume empty$
             { skip$ }
             { ". " * push.bd * volume tie.or.space.connect }
           if$
@@ -812,9 +812,9 @@ FUNCTION {push.btitle.vol}
         { volume empty$
             { push.btitle }
             { series format.emphasize ". " * 
-	      push.bd * volume tie.or.space.connect 
-	      ": " * push.btitle *  
-	    } 
+        push.bd * volume tie.or.space.connect 
+        ": " * push.btitle *  
+      } 
           if$
         }
       if$
@@ -842,29 +842,29 @@ FUNCTION {push.series.number}
 { volume empty$
     { series empty$
         { number empty$
-	    { "" }
-	    { "there's a number but no series in " cite$ * warning$ 
-	      "(" number * ")" * }
-	  if$
-	}
-	{ "(" series *
-	  number empty$
-	    { skip$ }
-	    { number tie.or.space.connect }
-	  if$
-	  ")" * 
-	}
+      { "" }
+      { "there's a number but no series in " cite$ * warning$ 
+        "(" number * ")" * }
+    if$
+  }
+  { "(" series *
+    number empty$
+      { skip$ }
+      { number tie.or.space.connect }
+    if$
+    ")" * 
+  }
       if$
     }
     { series empty$
         { "" }
         { type$ "proceedings" =
             { "(" series * 
-	      number empty$ 
+        number empty$ 
                 { skip$ }
                 { number tie.or.space.connect }
               if$ 
-	      ")" * 
+        ")" * 
             }
             { "" }
           if$
@@ -925,7 +925,7 @@ FUNCTION {push.vol.year.num.pages}
     { "there's no year in " cite$ * warning$ }
     { duplicate$ empty$
         { pop$ "(" }
-	{ " (" * }
+  { " (" * }
       if$
       year * ")" * 
     }
@@ -952,7 +952,7 @@ FUNCTION {push.vol.year.num.pages}
     { duplicate$ empty$
         { skip$ }
         { ", " *
-	  title missing$
+    title missing$
             { push.pages.book * }
             { push.pages * }
           if$ 
@@ -1185,9 +1185,9 @@ FUNCTION {inbook}
     { push.in.ed.booktitle "booktitle" out.check.required
       address empty$
         { part.of.sentence
-	  push.address.publisher.year out
-	}
-	{ push.address.publisher.year "publisher" out.check.required }
+    push.address.publisher.year out
+  }
+  { push.address.publisher.year "publisher" out.check.required }
       if$
       new.sentence
       series empty$
@@ -1308,14 +1308,14 @@ FUNCTION {manual}
   author empty$
     { organization empty$
         { title empty$
-	    { skip$ }
+      { skip$ }
             { push.btitle "title" out.check.required }
           if$
         }
-	{ push.organization out.block
+  { push.organization out.block
           set.colon.after
           push.btitle "title" out.check.required
-	}
+  }
       if$
     }
     { push.authors out.block 
@@ -1326,10 +1326,10 @@ FUNCTION {manual}
   push.edition "edition" out.check.required
   author empty$
     { organization empty$
-	{ address out
+  { address out
           part.of.sentence
-	}
-	{ skip$ }
+  }
+  { skip$ }
       if$
     }
     { address ": " * push.organization * out
@@ -1377,11 +1377,11 @@ FUNCTION {misc}
     { title empty$ 
         { skip$ }
         { push.authors.editors out.block
-	  set.colon.after
+    set.colon.after
           push.btitle out
           howpublished out
           push.date out 
-	  push.crossref out
+    push.crossref out
           url set.period.dash.check
           push.url out
         } 
@@ -1389,10 +1389,10 @@ FUNCTION {misc}
     }
     { note #1 #4 substring$ "u" change.case$ "NORM" =
         { note out 
-	  part.of.sentence 
+    part.of.sentence 
           push.date out 
           push.title format.emphasize out
-	  push.crossref out
+    push.crossref out
         }
         { author empty$
             { editor empty$
@@ -1405,15 +1405,15 @@ FUNCTION {misc}
                 } 
                 { push.editors push.organization * out.block 
                   set.colon.after 
-	        }
+          }
               if$
             } 
             { push.authors.editors out.block
               set.colon.after 
-	    }
+      }
           if$
           push.btitle out
-	  push.crossref out
+    push.crossref out
           howpublished out
           push.date out 
           new.sentence
@@ -1462,7 +1462,7 @@ FUNCTION {proceedings}
     { push.editors
       organization empty$
         { skip$ }
-	{ "~; " * push.organization * }
+  { "~; " * push.organization * }
       if$ 
     }
   if$
@@ -1625,7 +1625,7 @@ FUNCTION {author.label}
         { cite$ }
         { author format.lab.names }
       if$
-    }	
+    } 
     { key }
   if$
 }
@@ -1635,9 +1635,9 @@ FUNCTION {author.editor.label}
 { key empty$
     { author empty$
         { editor empty$
-	    { cite$ }
-	    { editor format.lab.names }
-	  if$  
+      { cite$ }
+      { editor format.lab.names }
+    if$  
         }
         { author format.lab.names }
       if$
@@ -1651,9 +1651,9 @@ FUNCTION {author.organization.label}
 { key empty$
     { author empty$
         { organization empty$
-	    { cite$ }
-	    { organization chop.article }
-	  if$  
+      { cite$ }
+      { organization chop.article }
+    if$  
         }
         { author format.lab.names }
       if$
@@ -1666,11 +1666,11 @@ FUNCTION {editor.organization.label}
 % label from key, editor or organization
 { key empty$
     { editor empty$
-	{ organization empty$
-	    { cite$ }
-	    { organization chop.article }
-	  if$
-	}
+  { organization empty$
+      { cite$ }
+      { organization chop.article }
+    if$
+  }
         { editor format.lab.names }
       if$
     }
@@ -1685,12 +1685,12 @@ FUNCTION {calc.short.authors}
   or
     { author.editor.label }
     { type$ "proceedings" =
-	{ editor.organization.label }
-	{ type$ "manual" =
-	    { author.organization.label }
-	    { author.label }
-	  if$
-	}
+  { editor.organization.label }
+  { type$ "manual" =
+      { author.organization.label }
+      { author.label }
+    if$
+  }
       if$
     }
   if$
@@ -1726,7 +1726,7 @@ FUNCTION {sort.format.names}
        namesleft #1 = 
        t "others" = 
        and
-	 { "[" * push.ua * "]" * }
+   { "[" * push.ua * "]" * }
          { t sortify * }
        if$
        nameptr #1 + 'nameptr :=
@@ -1746,10 +1746,10 @@ FUNCTION {author.sort}
 % author or key for sorting
 { key empty$
     { author empty$
-	{ "to sort, need author or key in " cite$ * warning$
-	  ""
-	}
-	{ author sort.format.names }
+  { "to sort, need author or key in " cite$ * warning$
+    ""
+  }
+  { author sort.format.names }
       if$
     }
     { key sortify }
@@ -1760,14 +1760,14 @@ FUNCTION {author.editor.sort}
 % author, editor or key for sorting
 { key empty$
     { author empty$
-	{ editor empty$
-	    { "to sort, need author, editor, or key in " cite$ * warning$
-	      ""
-	    }
-	    { editor sort.format.names }
-	  if$
-	}
-	{ author sort.format.names }
+  { editor empty$
+      { "to sort, need author, editor, or key in " cite$ * warning$
+        ""
+      }
+      { editor sort.format.names }
+    if$
+  }
+  { author sort.format.names }
       if$
     }
     { key sortify }
@@ -1778,14 +1778,14 @@ FUNCTION {author.organization.sort}
 % author, organization or key for sorting
 { key empty$
     { author empty$
-	{ organization empty$
-	    { "to sort, need author, organization, or key in " cite$ * warning$
-	      ""
-	    }
-	    { organization chop.article sortify }
-	  if$
-	}
-	{ author sort.format.names }
+  { organization empty$
+      { "to sort, need author, organization, or key in " cite$ * warning$
+        ""
+      }
+      { organization chop.article sortify }
+    if$
+  }
+  { author sort.format.names }
       if$
     }
     { key sortify }
@@ -1796,14 +1796,14 @@ FUNCTION {editor.organization.sort}
 % editor, organization or key for sorting
 { key empty$
     { editor empty$
-	{ organization empty$
-	    { "to sort, need editor, organization, or key in " cite$ * warning$
-	      ""
-	    }
-	    { organization chop.article sortify }
-	  if$
-	}
-	{ editor sort.format.names }
+  { organization empty$
+      { "to sort, need editor, organization, or key in " cite$ * warning$
+        ""
+      }
+      { organization chop.article sortify }
+    if$
+  }
+  { editor sort.format.names }
       if$
     }
     { key sortify }
@@ -1820,12 +1820,12 @@ FUNCTION {presort}
   or
     { author.editor.sort }
     { type$ "proceedings" =
-	{ editor.organization.sort }
-	{ type$ "manual" =
-	    { author.organization.sort }
-	    { author.sort }
-	  if$
-	}
+  { editor.organization.sort }
+  { type$ "manual" =
+      { author.organization.sort }
+      { author.sort }
+    if$
+  }
       if$
     }
   if$
